@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - SUFFERLAND</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-purple: #6b21a8;
+            --deep-purple: #3b0764;
+            --neon-purple: #a855f7;
+            --crimson-red: #dc2626;
+            --dark-red: #7f1d1d;
+            --neon-red: #f87171;
+            --bg-dark: #0a0a0f;
+            --bg-card: #13131f;
+            --bg-card-hover: #1a1a2e;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --success-green: #22c55e;
+            --warning-yellow: #eab308;
+            --discord-blue: #5865F2;
+        }
+        
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        /* Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(107, 33, 168, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(220, 38, 38, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+        
+        /* Admin Layout */
+        .admin-wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--bg-card);
+            border-right: 1px solid rgba(168, 85, 247, 0.1);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        
+        .sidebar-header {
+            padding: 2rem;
+            border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+        }
+        
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .sidebar-logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #6b21a8 0%, #dc2626 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .sidebar-logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #a855f7 0%, #f87171 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .sidebar-nav {
+            flex: 1;
+            padding: 1.5rem 1rem;
+        }
+        
+        .nav-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .nav-section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            padding: 0 1rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.875rem 1rem;
+            border-radius: 10px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 0.25rem;
+        }
+        
+        .nav-item:hover {
+            background: rgba(168, 85, 247, 0.1);
+            color: var(--text-primary);
+        }
+        
+        .nav-item.active {
+            background: linear-gradient(135deg, rgba(107, 33, 168, 0.3) 0%, rgba(220, 38, 38, 0.3) 100%);
+            color: white;
+        }
+        
+        .nav-item i {
+            width: 20px;
+            font-size: 1rem;
+        }
+        
+        .nav-item span {
+            font-weight: 500;
+        }
+        
+        .sidebar-footer {
+            padding: 1.5rem;
+            border-top: 1px solid rgba(168, 85, 247, 0.1);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #6b21a8 0%, #dc2626 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: white;
+        }
+        
+        .user-details {
+            flex: 1;
+        }
+        
+        .user-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .user-role {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        
+        .logout-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(220, 38, 38, 0.15);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            border-radius: 10px;
+            color: var(--neon-red);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(220, 38, 38, 0.3);
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2rem;
+        }
+        
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+        }
+        
+        .content-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .content-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #6b21a8 0%, #dc2626 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(107, 33, 168, 0.4);
+        }
+        
+        .btn-secondary {
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            color: var(--neon-purple);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(168, 85, 247, 0.2);
+        }
+        
+        .btn-success {
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: var(--success-green);
+        }
+        
+        /* Content Sections */
+        .content-section {
+            display: none;
+        }
+        
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid rgba(168, 85, 247, 0.1);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+        
+        .card-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .card-title i {
+            color: var(--neon-purple);
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        /* Form Elements */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .form-group label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            padding: 0.875rem 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.15);
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-hint {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        
+        /* Rank Editor */
+        .rank-editor {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(168, 85, 247, 0.1);
+        }
+        
+        .rank-editor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .rank-editor-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .rank-badge-vip { color: #22c55e; }
+        .rank-badge-mvp { color: #3b82f6; }
+        .rank-badge-elite { color: #a855f7; }
+        .rank-badge-giant { color: #f97316; }
+        .rank-badge-titan { color: #dc2626; }
+        
+        .perks-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+        
+        .perk-item {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        
+        .perk-item input {
+            flex: 1;
+        }
+        
+        .perk-remove {
+            padding: 0.5rem 0.75rem;
+            background: rgba(220, 38, 38, 0.15);
+            border: none;
+            border-radius: 8px;
+            color: var(--neon-red);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .perk-remove:hover {
+            background: rgba(220, 38, 38, 0.3);
+        }
+        
+        .add-perk-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(34, 197, 94, 0.15);
+            border: none;
+            border-radius: 8px;
+            color: var(--success-green);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .add-perk-btn:hover {
+            background: rgba(34, 197, 94, 0.3);
+        }
+        
+        /* Status Messages */
+        .status-message {
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            display: none;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .status-message.show {
+            display: flex;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .status-message.success {
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: var(--success-green);
+        }
+        
+        .status-message.error {
+            background: rgba(220, 38, 38, 0.15);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            color: var(--neon-red);
+        }
+        
+        /* Preview Section */
+        .preview-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        
+        /* Mobile Toggle */
+        .mobile-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1000;
+            width: 45px;
+            height: 45px;
+            background: var(--bg-card);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                z-index: 999;
+            }
+            
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .mobile-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .content-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .content-actions {
+                width: 100%;
+            }
+            
+            .btn {
+                flex: 1;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="mobile-toggle" id="mobile-toggle">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <div class="admin-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <div class="sidebar-logo-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <span class="sidebar-logo-text">SUFFERLAND</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Management</div>
+                    <div class="nav-item active" data-section="dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </div>
+                    <div class="nav-item" data-section="server">
+                        <i class="fas fa-server"></i>
+                        <span>Server Info</span>
+                    </div>
+                    <div class="nav-item" data-section="ranks">
+                        <i class="fas fa-crown"></i>
+                        <span>Ranks</span>
+                    </div>
+                    <div class="nav-item" data-section="discord">
+                        <i class="fab fa-discord"></i>
+                        <span>Discord</span>
+                    </div>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">System</div>
+                    <div class="nav-item" data-section="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </div>
+                    <div class="nav-item" data-section="preview">
+                        <i class="fas fa-eye"></i>
+                        <span>Preview Config</span>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-details">
+                        <div class="user-name" id="admin-username">Admin</div>
+                        <div class="user-role">Administrator</div>
+                    </div>
+                </div>
+                <button class="logout-btn" id="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Status Message -->
+            <div class="status-message" id="status-message">
+                <i class="fas fa-check-circle"></i>
+                <span id="status-text">Changes saved successfully!</span>
+            </div>
+            
+            <!-- Dashboard Section -->
+            <div class="content-section active" id="dashboard-section">
+                <div class="content-header">
+                    <h1 class="content-title">Dashboard</h1>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-info-circle"></i>
+                            Welcome to SUFFERLAND Admin Panel
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                            Use this admin panel to manage your Minecraft server website content. You can edit:
+                        </p>
+                        <ul style="color: var(--text-secondary); padding-left: 1.5rem; line-height: 2;">
+                            <li>Server information (IP, port, description)</li>
+                            <li>Rank names, prices, and perks</li>
+                            <li>Discord server link</li>
+                            <li>Website text and descriptions</li>
+                        </ul>
+                        <p style="color: var(--text-muted); margin-top: 1.5rem; font-size: 0.9rem;">
+                            <i class="fas fa-lightbulb" style="color: var(--warning-yellow);"></i>
+                            Tip: All changes are saved to config.json and will be reflected on the website immediately.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-link"></i>
+                            Quick Links
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <a href="index.html" target="_blank" class="btn btn-secondary">
+                                <i class="fas fa-external-link-alt"></i>
+                                View Website
+                            </a>
+                            <a href="login.html" class="btn btn-secondary">
+                                <i class="fas fa-redo"></i>
+                                Refresh Login
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Server Info Section -->
+            <div class="content-section" id="server-section">
+                <div class="content-header">
+                    <h1 class="content-title">Server Information</h1>
+                    <div class="content-actions">
+                        <button class="btn btn-primary" onclick="saveServerInfo()">
+                            <i class="fas fa-save"></i>
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-server"></i>
+                            Server Details
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="server-name">Server Name</label>
+                                <input type="text" id="server-name" value="SUFFERLAND">
+                            </div>
+                            <div class="form-group">
+                                <label for="server-ip">Server IP</label>
+                                <input type="text" id="server-ip" value="suffer.mcnation.xyz">
+                            </div>
+                            <div class="form-group">
+                                <label for="server-port">Port</label>
+                                <input type="text" id="server-port" value="4088">
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="server-tagline">Tagline</label>
+                                <input type="text" id="server-tagline" value="Survival Reimagined. PvP Perfected.">
+                                <span class="form-hint">Short tagline displayed in the hero section</span>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="server-description">Description</label>
+                                <input type="text" id="server-description" value="Join the ultimate SwordSMP x InfuseSMP x Economy hybrid experience">
+                                <span class="form-hint">Brief description under the tagline</span>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="server-full-desc">Full Description</label>
+                                <textarea id="server-full-desc">SUFFERLAND is a SwordSMP x InfuseSMP x Economy hybrid survival server that combines intense PvP mechanics with progression systems and a competitive player-driven economy.</textarea>
+                                <span class="form-hint">Detailed description for the server info section</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ranks Section -->
+            <div class="content-section" id="ranks-section">
+                <div class="content-header">
+                    <h1 class="content-title">Rank Management</h1>
+                    <div class="content-actions">
+                        <button class="btn btn-primary" onclick="saveRanks()">
+                            <i class="fas fa-save"></i>
+                            Save All Ranks
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- VIP Rank -->
+                <div class="rank-editor">
+                    <div class="rank-editor-header">
+                        <div class="rank-editor-title">
+                            <i class="fas fa-crown rank-badge-vip"></i>
+                            VIP Rank
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="vip-name">Rank Name</label>
+                            <input type="text" id="vip-name" value="VIP">
+                        </div>
+                        <div class="form-group">
+                            <label for="vip-price">Price (₱)</label>
+                            <input type="number" id="vip-price" value="50">
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Perks</label>
+                            <div class="perks-list" id="vip-perks-list">
+                                <!-- Perks will be loaded here -->
+                            </div>
+                            <button class="add-perk-btn" onclick="addPerk('vip')">
+                                <i class="fas fa-plus"></i>
+                                Add Perk
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- MVP Rank -->
+                <div class="rank-editor">
+                    <div class="rank-editor-header">
+                        <div class="rank-editor-title">
+                            <i class="fas fa-crown rank-badge-mvp"></i>
+                            MVP Rank
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="mvp-name">Rank Name</label>
+                            <input type="text" id="mvp-name" value="MVP">
+                        </div>
+                        <div class="form-group">
+                            <label for="mvp-price">Price (₱)</label>
+                            <input type="number" id="mvp-price" value="100">
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Perks</label>
+                            <div class="perks-list" id="mvp-perks-list">
+                                <!-- Perks will be loaded here -->
+                            </div>
+                            <button class="add-perk-btn" onclick="addPerk('mvp')">
+                                <i class="fas fa-plus"></i>
+                                Add Perk
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ELITE Rank -->
+                <div class="rank-editor">
+                    <div class="rank-editor-header">
+                        <div class="rank-editor-title">
+                            <i class="fas fa-crown rank-badge-elite"></i>
+                            ELITE Rank
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="elite-name">Rank Name</label>
+                            <input type="text" id="elite-name" value="ELITE">
+                        </div>
+                        <div class="form-group">
+                            <label for="elite-price">Price (₱)</label>
+                            <input type="number" id="elite-price" value="150">
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Perks</label>
+                            <div class="perks-list" id="elite-perks-list">
+                                <!-- Perks will be loaded here -->
+                            </div>
+                            <button class="add-perk-btn" onclick="addPerk('elite')">
+                                <i class="fas fa-plus"></i>
+                                Add Perk
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- GIANT Rank -->
+                <div class="rank-editor">
+                    <div class="rank-editor-header">
+                        <div class="rank-editor-title">
+                            <i class="fas fa-crown rank-badge-giant"></i>
+                            GIANT Rank
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="giant-name">Rank Name</label>
+                            <input type="text" id="giant-name" value="GIANT">
+                        </div>
+                        <div class="form-group">
+                            <label for="giant-price">Price (₱)</label>
+                            <input type="number" id="giant-price" value="200">
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Perks</label>
+                            <div class="perks-list" id="giant-perks-list">
+                                <!-- Perks will be loaded here -->
+                            </div>
+                            <button class="add-perk-btn" onclick="addPerk('giant')">
+                                <i class="fas fa-plus"></i>
+                                Add Perk
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- TITAN Rank -->
+                <div class="rank-editor">
+                    <div class="rank-editor-header">
+                        <div class="rank-editor-title">
+                            <i class="fas fa-crown rank-badge-titan"></i>
+                            TITAN Rank
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="titan-name">Rank Name</label>
+                            <input type="text" id="titan-name" value="TITAN">
+                        </div>
+                        <div class="form-group">
+                            <label for="titan-price">Price (₱)</label>
+                            <input type="number" id="titan-price" value="400">
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Perks</label>
+                            <div class="perks-list" id="titan-perks-list">
+                                <!-- Perks will be loaded here -->
+                            </div>
+                            <button class="add-perk-btn" onclick="addPerk('titan')">
+                                <i class="fas fa-plus"></i>
+                                Add Perk
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Discord Section -->
+            <div class="content-section" id="discord-section">
+                <div class="content-header">
+                    <h1 class="content-title">Discord Settings</h1>
+                    <div class="content-actions">
+                        <button class="btn btn-primary" onclick="saveDiscord()">
+                            <i class="fas fa-save"></i>
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fab fa-discord"></i>
+                            Discord Server Link
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label for="discord-link">Discord Invite URL</label>
+                                <input type="url" id="discord-link" value="https://discord.gg/sufferland" placeholder="https://discord.gg/yourserver">
+                                <span class="form-hint">Enter your Discord server invite link</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Settings Section -->
+            <div class="content-section" id="settings-section">
+                <div class="content-header">
+                    <h1 class="content-title">Admin Settings</h1>
+                    <div class="content-actions">
+                        <button class="btn btn-primary" onclick="saveSettings()">
+                            <i class="fas fa-save"></i>
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-user-shield"></i>
+                            Change Admin Credentials
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="admin-username-new">New Username</label>
+                                <input type="text" id="admin-username-new" placeholder="Enter new username">
+                            </div>
+                            <div class="form-group">
+                                <label for="admin-password-new">New Password</label>
+                                <input type="password" id="admin-password-new" placeholder="Enter new password">
+                            </div>
+                            <div class="form-group">
+                                <label for="admin-password-confirm">Confirm Password</label>
+                                <input type="password" id="admin-password-confirm" placeholder="Confirm new password">
+                            </div>
+                        </div>
+                        <p style="color: var(--text-muted); margin-top: 1rem; font-size: 0.9rem;">
+                            <i class="fas fa-info-circle"></i>
+                            Leave blank to keep current credentials
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Preview Section -->
+            <div class="content-section" id="preview-section">
+                <div class="content-header">
+                    <h1 class="content-title">Configuration Preview</h1>
+                    <div class="content-actions">
+                        <button class="btn btn-secondary" onclick="loadConfigPreview()">
+                            <i class="fas fa-sync"></i>
+                            Refresh
+                        </button>
+                        <button class="btn btn-primary" onclick="downloadConfig()">
+                            <i class="fas fa-download"></i>
+                            Download JSON
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-code"></i>
+                            Current Configuration (config.json)
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="preview-box" id="config-preview">
+                            Loading...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="admin.js"></script>
+</body>
+</html>

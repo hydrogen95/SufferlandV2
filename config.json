@@ -1,0 +1,142 @@
+{
+  "server": {
+    "name": "SUFFERLAND",
+    "ip": "suffer.mcnation.xyz",
+    "port": "4088",
+    "description": "Join the ultimate SwordSMP x InfuseSMP x Economy hybrid experience",
+    "tagline": "Survival Reimagined. PvP Perfected.",
+    "fullDescription": "SUFFERLAND is a SwordSMP x InfuseSMP x Economy hybrid survival server that combines intense PvP mechanics with progression systems and a competitive player-driven economy."
+  },
+  "discord": {
+    "link": "https://discord.gg/XaUBr97NUW"
+  },
+  "payment": {
+    "gcash": {
+      "number": "09937978735",
+      "name": "JO*N R."
+    },
+    "paymaya": {
+      "number": "09069634225"
+    }
+  },
+  "ranks": {
+    "vip": {
+      "name": "VIP",
+      "price": 50,
+      "perks": [
+        "2x Homes",
+        "10x Concurrent Auctions",
+        "/grindstone Command",
+        "/disposal Command",
+        "/ec Command",
+        "/kit Command"
+      ]
+    },
+    "mvp": {
+      "name": "MVP",
+      "price": 100,
+      "perks": [
+        "3x Homes",
+        "15x Concurrent Auctions",
+        "/cartographytable Command",
+        "/stonecutter Command",
+        "/disposal Command",
+        "/craft Command",
+        "/grindstone Command",
+        "/kit Command"
+      ]
+    },
+    "elite": {
+      "name": "ELITE",
+      "price": 150,
+      "perks": [
+        "4x Homes",
+        "20x Concurrent Auctions",
+        "/craft Command",
+        "/ec Command",
+        "/disposal Command",
+        "/stonecutter Command",
+        "/grindstone Command",
+        "/repair Command",
+        "/anvil Command",
+        "/cartographytable Command",
+        "/kit Command"
+      ]
+    },
+    "giant": {
+      "name": "GIANT",
+      "price": 200,
+      "perks": [
+        "5x Homes",
+        "25x Concurrent Auctions",
+        "/craft Command",
+        "/ec Command",
+        "/disposal Command",
+        "/stonecutter Command",
+        "/grindstone Command",
+        "/anvil Command",
+        "/smithingtable Command",
+        "/cartographytable Command",
+        "/repair Command",
+        "/ptime Command",
+        "/kit Command"
+      ]
+    },
+    "titan": {
+      "name": "TITAN",
+      "price": 400,
+      "perks": [
+        "7x Homes",
+        "30x Concurrent Auctions",
+        "/craft Command",
+        "/cartographytable Command",
+        "/ec Command",
+        "/stonecutter Command",
+        "/grindstone Command",
+        "/anvil Command",
+        "/smithingtable Command",
+        "/ptime Command",
+        "/pweather Command",
+        "/repair Command",
+        "/near Command",
+        "/kit Command"
+      ]
+    }
+  },
+  "features": [
+    {
+      "title": "Custom SwordSMP Combat",
+      "description": "Experience intense PvP with custom SwordSMP combat mechanics designed for competitive gameplay",
+      "icon": "fa-sword"
+    },
+    {
+      "title": "InfuseSMP Abilities",
+      "description": "Unlock powerful abilities and item enhancements to dominate your enemies",
+      "icon": "fa-magic"
+    },
+    {
+      "title": "Player Economy",
+      "description": "Trade, auction, and build your wealth in our competitive player-driven economy",
+      "icon": "fa-coins"
+    },
+    {
+      "title": "Rank Perks",
+      "description": "Progress through ranks to unlock exclusive perks and gameplay advantages",
+      "icon": "fa-crown"
+    },
+    {
+      "title": "Strategic PvP",
+      "description": "Competitive survival where strategy and skill determine the victor",
+      "icon": "fa-skull"
+    },
+    {
+      "title": "Advanced Crafting",
+      "description": "Master complex progression systems and crafting mechanics",
+      "icon": "fa-hammer"
+    }
+  ],
+  "admin": {
+    "username": "admin",
+    "password": "sufferland2024"
+  }
+}
